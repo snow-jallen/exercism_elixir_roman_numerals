@@ -115,60 +115,106 @@ defmodule RomanNumeralsTest do
   end
 
   test "39" do
-    assert RomanNumerals.numeral(39) == "XXIX"
+    assert RomanNumerals.numeral(39) == "XXXIX"
   end
 
   test "40" do
     assert RomanNumerals.numeral(40) == "XL"
   end
 
-  @tag :pending
   test "48" do
     assert RomanNumerals.numeral(48) == "XLVIII"
   end
 
-  @tag :pending
+  test "50" do
+    assert RomanNumerals.numeral(50) == "L"
+  end
+
   test "59" do
     assert RomanNumerals.numeral(59) == "LIX"
   end
 
-  @tag :pending
+  test "60" do
+    assert RomanNumerals.numeral(60) == "LX"
+  end
+
+  test "65" do
+    assert RomanNumerals.numeral(65) == "LXV"
+  end
+
+  test "69" do
+    assert RomanNumerals.numeral(69) == "LXIX"
+  end
+
+  test "70" do
+    assert RomanNumerals.numeral(70) == "LXX"
+  end
+
+  test "79" do
+    assert RomanNumerals.numeral(79) == "LXXIX"
+  end
+
+  test "85" do
+    assert RomanNumerals.numeral(85) == "LXXXV"
+  end
+
+  test "90" do
+    assert RomanNumerals.numeral(90) == "XC"
+  end
+
   test "93" do
     assert RomanNumerals.numeral(93) == "XCIII"
   end
 
-  @tag :pending
   test "141" do
     assert RomanNumerals.numeral(141) == "CXLI"
   end
 
-  @tag :pending
   test "163" do
     assert RomanNumerals.numeral(163) == "CLXIII"
   end
 
-  @tag :pending
+  test "199" do
+    assert RomanNumerals.numeral(199) == "CXCIX"
+  end
+
+  test "200" do
+    assert RomanNumerals.numeral(200) == "CC"
+  end
+
+  test "279" do
+    assert RomanNumerals.numeral(279) == "CCLXXIX"
+  end
+
+  test "333" do
+    assert RomanNumerals.numeral(333) == "CCCXXXIII"
+  end
+
   test "402" do
     assert RomanNumerals.numeral(402) == "CDII"
   end
 
-  @tag :pending
   test "575" do
     assert RomanNumerals.numeral(575) == "DLXXV"
   end
 
-  @tag :pending
   test "911" do
     assert RomanNumerals.numeral(911) == "CMXI"
   end
 
-  @tag :pending
   test "1024" do
     assert RomanNumerals.numeral(1024) == "MXXIV"
   end
 
-  @tag :pending
+  test "1536" do
+    assert RomanNumerals.numeral(1536) == "MDXXXVI"
+  end
+
   test "3000" do
     assert RomanNumerals.numeral(3000) == "MMM"
+  end
+
+  test "4279" do
+    assert RomanNumerals.numeral(4279) == "MMMMCCLXXIX"
   end
 end
