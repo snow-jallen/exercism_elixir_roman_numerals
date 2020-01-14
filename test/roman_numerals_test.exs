@@ -1,6 +1,7 @@
 defmodule RomanNumeralsTest do
   use ExUnit.Case
   doctest RomanNumerals
+
   test "1" do
     assert RomanNumerals.numeral(1) == "I"
   end
@@ -27,11 +28,11 @@ defmodule RomanNumeralsTest do
   end
 
   test "7" do
-    assert RomanNumerals.numeral(7)=="VII"
+    assert RomanNumerals.numeral(7) == "VII"
   end
 
   test "8" do
-    assert RomanNumerals.numeral(8)=="VIII"
+    assert RomanNumerals.numeral(8) == "VIII"
   end
 
   test "9" do
