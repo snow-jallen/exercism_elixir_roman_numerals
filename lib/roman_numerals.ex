@@ -1,79 +1,65 @@
 defmodule RomanNumerals do
-  @doc """
-  Convert the number to a roman number.
+
+  @moduledoc """
+  Arabic to Roman and Roman to Arabic number converter
   """
-  @spec numeral(pos_integer) :: String.t()
-  def numeral(number) when number == 0 do "" end
-  def numeral(number) when number <= 3 do
-    Enum.map((1..number), fn(_)->"I" end) |> Enum.join
-  end
-  def numeral(number) when number == 4 do "IV" end
-  def numeral(number) when number == 5 do "V" end
-  def numeral(number) when number <= 8 do
-    "V#{String.duplicate("I", number-5)}"
-  end
-  def numeral(number) when number == 9 do "IX" end
-  def numeral(number) when number == 10 do "X" end
-  def numeral(number) when number <= 38 do
-    [Enum.map(1..div(number,10),fn(_)->numeral(10) end),numeral(rem(number,10))] |> Enum.join
-  end
-  def numeral(number) when rem(number,div(number,10)*10)==9 do
-    [numeral(div(number,10)*10),numeral(9)] |> Enum.join
-  end
-  def numeral(number) when number == 40 do "XL" end
-  def numeral(number) when number < 50 do
-    [numeral(40),numeral(rem(number,40))] |> Enum.join
-  end
-  def numeral(number) when number==50 do "L" end
-  def numeral(number) when number < 60 do
-    [numeral(50), numeral(rem(number,50))] |> Enum.join
-  end
-  def numeral(number) when number < 70 do
-    [numeral(50), numeral(10), numeral(rem(number,60))] |> Enum.join
-  end
-  def numeral(number) when number < 80 do
-    [numeral(50), numeral(20), numeral(rem(number,70))] |> Enum.join
-  end
-  def numeral(number) when number < 90 do
-    [numeral(50), numeral(30), numeral(rem(number,80))] |> Enum.join
-  end
-  def numeral(number) when number == 90 do "XC" end
-  def numeral(number) when number < 100 do
-    [numeral(90), numeral(rem(number,90))] |> Enum.join
-  end
-  def numeral(number) when number == 100 do "C" end
-  def numeral(number) when number <= 200 do
-    [numeral(100), numeral(number-100)] |> Enum.join
-  end
-  def numeral(number) when number < 300 do
-    [numeral(200), numeral(number-200)] |> Enum.join
-  end
-  def numeral(number) when number == 300 do
-    [numeral(200), numeral(100)] |> Enum.join
-  end
-  def numeral(number) when number < 400 do
-    [numeral(300), numeral(number-300)] |> Enum.join
-  end
-  def numeral(number) when number == 400 do "CD" end
-  def numeral(number) when number < 490 do
-    [numeral(400), numeral(number-400)] |> Enum.join
-  end
-  def numeral(number) when number == 500 do "D" end
-  def numeral(number) when number < 600 do
-    [numeral(500), numeral(number-500)] |> Enum.join
-  end
-  def numeral(number) when number == 900 do "CM" end
-  def numeral(number) when number < 1000 do
-    [numeral(900), numeral(number-900)] |> Enum.join
-  end
-  def numeral(number) when number == 1000 do "M" end
-  def numeral(number) when number < 1900 do
-    [numeral(1000), numeral(number-1000)] |> Enum.join
-  end
-  def numeral(number) when rem(number,1000) == 0 do
-    [Enum.map(1..div(number,1000),fn(_)->numeral(1000) end)] |> Enum.join
-  end
-  def numeral(number) when number < 4400 do
-    [numeral(div(number,1000)*1000),numeral(rem(number,1000))] |> Enum.join
-  end
+
+  @doc """
+  Converts positive integer values to Roman.
+
+  ## Examples
+
+      iex> RomanNumerals.numeral(17)
+      "XVII"
+
+  """
+    def numeral(number,acc \\ "") do
+      case number do
+        0 -> acc
+        n when n>= 1000 -> numeral(number-1000,acc <> "M")
+        n when n>= 900 -> numeral(number-900,acc <> "CM")
+        n when n>= 500 -> numeral(number-500,acc <> "D")
+        n when n>= 400 -> numeral(number-400,acc <> "CD")
+        n when n>= 100 -> numeral(number-100,acc <> "C")
+        n when n>= 90 -> numeral(number-90,acc <> "XC")
+        n when n>= 50 -> numeral(number-50,acc <> "L")
+        n when n>= 40 -> numeral(number-40,acc <> "XL")
+        n when n>= 10 -> numeral(number-10,acc <> "X")
+        n when n>= 9 -> numeral(number-9,acc <> "IX")
+        n when n>= 5 -> numeral(number-5,acc <> "V")
+        n when n>= 4 -> numeral(number-4,acc <> "IV")
+        n when n>= 1 -> numeral(number-1,acc <> "I")
+      end  
+    end
+
+  @doc """
+  Converts Roman number to integer.
+
+  ## Examples
+
+      iex> RomanNumerals.arabic("XVII")
+      17
+
+  """
+
+    def arabic(string,acc \\ 0) do
+      case startsWith(string) do
+        :end -> acc
+        {rest,taken} -> arabic(rest,acc+taken)
+      end  
+    end
+    defp startsWith(_input = "M" <> rest) do  {rest,1000}   end
+    defp startsWith(_input = "CM" <> rest) do {rest,900}    end
+    defp startsWith(_input = "D" <> rest) do  {rest,500}    end
+    defp startsWith(_input = "CD" <> rest) do {rest,400}    end
+    defp startsWith(_input = "C" <> rest) do  {rest,100}    end
+    defp startsWith(_input = "XC" <> rest) do {rest,90}    end
+    defp startsWith(_input = "L" <> rest) do  {rest,50}    end
+    defp startsWith(_input = "XL" <> rest) do {rest,40}    end
+    defp startsWith(_input = "X" <> rest) do  {rest,10}    end
+    defp startsWith(_input = "IX" <> rest) do {rest,9}    end
+    defp startsWith(_input = "V" <> rest) do  {rest,5}    end
+    defp startsWith(_input = "IV" <> rest) do {rest,4}    end
+    defp startsWith(_input = "I" <> rest) do  {rest,1}    end
+    defp startsWith("") do :end end
 end

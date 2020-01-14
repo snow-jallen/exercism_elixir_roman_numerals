@@ -1,6 +1,6 @@
 defmodule RomanNumeralsTest do
   use ExUnit.Case
-
+  doctest RomanNumerals
   test "1" do
     assert RomanNumerals.numeral(1) == "I"
   end
